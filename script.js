@@ -77,6 +77,7 @@ function send(response, data, statusCode) {
 
 function render(configText, callback) {
 
+
     // parse json
     try {
         var config = JSON.parse(configText);
@@ -86,20 +87,23 @@ function render(configText, callback) {
         return;
     }
 
-    // make sure we have a chart object.
-    if (!config.chart) {
-        callback("Missing chart configuration.");
-        return;
-    }
+      //  console.log('chartdata: '+JSON.stringify(config, null, 4))
 
-    // make sure we have an options object.
+
+    // // make sure we have a chart object.
+    // if (!config.chart) {
+    //     callback("Missing chart configuration.");
+    //     return;
+    // }
+
+    //make sure we have an options object.
     if (!config.chart.options) {
         config.chart.options = {};
     }
 
-    // turn off interactive features of chart.js
-    config.chart.options.responsive = false;
-    config.chart.options.animation = false;
+    // // turn off interactive features of chart.js
+    // config.chart.options.responsive = false;
+    // config.chart.options.animation = false;
 
     // get the width if specified. if not specified, default to 720.
     var width = config.width || 720;
@@ -123,6 +127,11 @@ function render(configText, callback) {
 
     // Chart.js must be installed as a peer dependency.
     page.injectJs(chartJsPath);
+    page.injectJs('../dysprosium/grails-app/assets/javascripts/rezza/rzaChart.js');
+    
+    page.onConsoleMessage = function(msg, lineNum, sourceId) {
+    console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
+    };
 
     // set the viewport size to define the render area
     page.viewportSize = {
@@ -130,7 +139,7 @@ function render(configText, callback) {
         height: height * scale
     };
 
-    page.evaluate(renderPage, config.chart, width, height, scale);
+    page.evaluate(renderPage, config, width, height, scale);
     var data = page.renderBase64(config.type || "PNG");
     page.close();
 
@@ -140,13 +149,20 @@ function render(configText, callback) {
     }
 }
 
-function renderPage(chart, width, height, scale) {
+
+
+
+
+function renderPage(config, width, height, scale) {
+
+    console.log('RENDER PAGE????')
 
     // clear body margin so canvas is positioned at upper left
     document.body.style.margin = "0";
 
     // create the canvas
     var canvas = document.createElement("canvas");
+    canvas.id = 'canvas-id';
 
     if (scale == 1) {
         canvas.setAttribute("width", width);
@@ -157,7 +173,8 @@ function renderPage(chart, width, height, scale) {
         canvas.setAttribute("height", height * scale);
         canvas.getContext("2d").setTransform(scale, 0, 0, scale, 0, 0);
 
-        // monkey patch the Chart Controller to reset the calculated height and width so chart renders correctly on the scaled canvas.
+        // monkey patch the Chart Controller to reset the calculated height and 
+        // width so chart renders correctly on the scaled canvas.
         var _super = Chart.Controller.prototype.initialize;
         Chart.Controller.prototype.initialize = function() {
 
@@ -166,10 +183,49 @@ function renderPage(chart, width, height, scale) {
             return _super.call(this);
         }
     }
+	document.body.appendChild(canvas);
 
-    document.body.appendChild(canvas);
+    // FROM SHARED SCRIPT
+   
+    // chart.charttype = 'sparkline';
+    console.log('do render: ');
+    renderChartJS(config.rezza_chart, "canvas-id", [0,1]);
 
-    new Chart(canvas, chart);
+
+
+     // IN PLACE
+    // var rezza_data = chartJSData(config.rezza_chart);
+    // console.log(JSON.stringify(rezza_data, null, 4));
+
+    // baseRenderChartJS(canvas, rezza_data);
+//     document.body.appendChild(canvas);
+// 	var ctx = document.getElementById("canvas-id").getContext("2d");
+  
+
+//     function arrayFill (array, val){
+//         for (var i = 0; i < array.length; i++){
+//             array[i] = val;
+//         }
+//         return array;
+//     };
+
+//     var highlightGradient = canvasGradient(ctx, gradientDims, highlightStops);
+//     var gradient = canvasGradient(ctx, gradientDims, gradientStops);
+//    // chart.data.datasets[0].backgroundColor = gradient;
+
+//    var color = new Array(chart.data.datasets[0].data.length);
+//    //color.fill(gradient);
+//    arrayFill(color, gradient);
+//    var highlight = chart.data.datasets[0].highlight;
+//    for (var i = 0; i < highlight.length; i++ ) {
+//        color[highlight[i]] = highlightGradient;
+//    }
+//     chart.data.datasets[0].backgroundColor = color;
+
+//     console.log('chart render: ');
+//     console.log(chart);
+
+//     new Chart(ctx, chart);
 }
 
 function createErrorMessage(msg, trace) {

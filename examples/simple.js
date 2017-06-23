@@ -1,15 +1,15 @@
-var createChartRenderer = require("phantom-chartjs").createChartRenderer;
+var createChartRenderer = require("../../phantom-chartjs").createChartRenderer;
 var fs = require("fs");
 var path = require("path");
 var mkdir = require("mkdir-p");
 
 var outputDir = path.join(__dirname, "output");
 mkdir.sync(outputDir);
-
-createChartRenderer({ logger: console }, function(err, renderer) {
+console.log('going?')
+createChartRenderer({ logger: console }, function (err, renderer) {
     if (err) throw err;
 
-    process.on("exit", function() {
+    process.on("exit", function () {
         renderer.close();
     });
 
@@ -19,36 +19,134 @@ createChartRenderer({ logger: console }, function(err, renderer) {
         chart: {
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                "labels": [
+                    "Cofine",
+                    "Marketoid",
+                    "Qualitex",
+                    "Melbacor",
+                    "Intradisk",
+                    "Sybixtex",
+                    "Illumity",
+                    "Danja",
+                    "Duflex",
+                    "Kongle",
+                    "Viocular",
+                    "Centregy",
+                    "Xyqag",
+                    "Ceprene",
+                    "Isoplex",
+                    "Ewaves",
+                    "Primordia",
+                    "Norsul",
+                    "Kegular",
+                    "Phormula",
+                    "Isotronic",
+                    "Exoteric",
+                    "Hivedom",
+                    "Kenegy",
+                    "Inventure",
+                    "Enerforce",
+                    "Recognia",
+                    "Avenetro",
+                    "Xurban",
+                    "Xylar",
+                    "Zerology",
+                    "Medmex",
+                    "Turnling",
+                    "Idetica",
+                    "Enquility",
+                    "Jumpstack",
+                    "Netplax",
+                    "Pyramis",
+                    "Strozen",
+                    "Aquasure",
+                    "Emergent",
+                    "Ecstasia",
+                    "Recrisys",
+                    "Equitax",
+                    "Assitia",
+                    "Nipaz",
+                    "Rodeology",
+                    "Genmex",
+                    "Knowlysis",
+                    "Avit"
+                ],
                 datasets: [{
+                    "backgroundColor": "#ED1752",
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                    "data": [
+                        1801,
+                        2954,
+                        4417,
+                        4804,
+                        3017,
+                        1235,
+                        3963,
+                        1204,
+                        4273,
+                        4190,
+                        2103,
+                        4795,
+                        86,
+                        2595,
+                        3363,
+                        4664,
+                        1970,
+                        2200,
+                        873,
+                        4361,
+                        4545,
+                        4051,
+                        2574,
+                        4690,
+                        2143,
+                        804,
+                        3488,
+                        868,
+                        1901,
+                        4451,
+                        1874,
+                        4722,
+                        4439,
+                        3540,
+                        2668,
+                        2446,
+                        3007,
+                        2939,
+                        944,
+                        537,
+                        2251,
+                        686,
+                        3691,
+                        1496,
+                        3196,
+                        3452,
+                        4318,
+                        1782,
+                        2808,
+                        3524
                     ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
+                    highlight: [3, 4]
                 }]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+            "options": {
+                "tooltips": {
+                    "mode": "label"
+                },
+                "scales": {
+                    "xAxes": [
+                        {
+                            "display": false
                         }
-                    }]
+                    ],
+                    "yAxes": [
+                        {
+                            "display": false
+                        }
+                    ]
+                },
+                "legend": {
+                    "display": false
                 }
             }
         }

@@ -1,0 +1,51 @@
+{
+  "charttype": "adjacentBar",
+  "title": "Absolute Values by Discount",
+  "xaxistitle": "Company Size",
+  "yaxistitle": "Web Site Visits (mean)",
+  "xaxisTicks": [
+    "Large",
+    "Small",
+    "Mid-Size",
+    "Fortune 500",
+    "Fortune 1000",
+    "Mid-size"
+  ],
+  "yaxisTicks": [],
+  "series": [
+    {
+      "legendTitle": "legendTitle",
+      "y": [
+        9.617765814266487,
+        8.842342342342342,
+        9.619469026548673,
+        0,
+        0,
+        0
+      ],
+      "highlight": [
+        {
+          "x": 4,
+          "label": "Fortune 500, Discount = 20 has a disproportionately low mean Web Site Visits relative to all values for Discount (0:10.33, or 0)."
+        }
+      ]
+    },
+    {
+      "legendTitle": "legendTitle",
+      "y": [
+        7.989396882053436,
+        8.058683449566253,
+        8.049201908836597,
+        10,
+        13,
+        11
+      ],
+      "highlight": [
+        {
+          "x": 4,
+          "label": "Fortune 500, Discount = 20 has a disproportionately low mean Web Site Visits relative to all values for Discount (0:10.33, or 0)."
+        }
+      ]
+    }
+  ]
+}

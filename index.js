@@ -11,6 +11,13 @@ var scriptPath = path.join(__dirname, "script.js"),
     chartJsPath = path.resolve(path.dirname(require.resolve("chart.js")), "../dist/Chart.bundle.min.js");
     binPath = phantomjs.path;
 
+Array.prototype.fill = function(val){
+    for (var i = 0; i < this.length; i++){
+        this[i] = val;
+    }
+    return this;
+};
+
 function ChartRenderer(options) {
     EventEmitter.call(this);
 
@@ -43,9 +50,9 @@ ChartRenderer.prototype.renderBase64 = function (config, callback) {
         return callback(new Error("Renderer is closed."));
     }
 
-    if (config.chart == null) {
-        return callback(new Error("Missing chart configuration."));
-    }
+    // if (config.chart == null) {
+    //     return callback(new Error("Missing chart configuration."));
+    // }
 
     if (config.type && (config.type != "PNG" && config.type != "JPEG" && config.type != "GIF")) {
         return callback(new Error("Unsupported image type '" + config.type + "'. Supported types are PNG, GIF, and JPEG."));
